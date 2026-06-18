@@ -1,0 +1,83 @@
+<section class="system-logs-page">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">System logs</p>
+      <h1>Audit trail and runtime health</h1>
+      <p class="lead">Day 43 audit log dashboard with searchable entries and health charts.</p>
+    </div>
+  </header>
+ 
+  <div class="filters">
+    <label>
+      <span>Search</span>
+      <input type="text" [(ngModel)]="searchTerm" (input)="applySearch()" placeholder="Endpoint, method, status, error" />
+    </label>
+    <label>
+      <span>From</span>
+      <input type="date" [(ngModel)]="from" (change)="load()" />
+    </label>
+    <label>
+      <span>To</span>
+      <input type="date" [(ngModel)]="to" (change)="load()" />
+    </label>
+    <label>
+      <span>Status</span>
+      <select [(ngModel)]="status" (change)="load()">
+        <option value="">All</option>
+        <option value="200">200</option>
+        <option value="400">400</option>
+        <option value="401">401</option>
+        <option value="403">403</option>
+        <option value="500">500</option>
+      </select>
+    </label>
+    <button type="button" class="secondary-btn" (click)="clearFilters()">Reset</button>
+  </div>
+ 
+  <p class="error" *ngIf="error">{{ error }}</p>
+  <p class="loading" *ngIf="loading">Loading system logs...</p>
+ 
+  <div class="grid" *ngIf="!loading && !error">
+    <article class="panel">
+      <h2>Error rate trend</h2>
+      <canvas baseChart [data]="errorRateChart" [type]="'bar'"></canvas>
+    </article>
+    <article class="panel">
+      <h2>Response time trend</h2>
+      <canvas baseChart [data]="responseTrendChart" [type]="'line'"></canvas>
+    </article>
+  </div>
+ 
+  <section class="table-panel" *ngIf="!loading && !error">
+    <div class="table-head">
+      <h2>Audit log entries</h2>
+      <p>{{ filteredLogs.length }} records shown</p>
+    </div>
+ 
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Endpoint</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Execution Time (ms)</th>
+            <th>Error</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of filteredLogs">
+            <td>{{ log.eventTimestamp | date:'short' }}</td>
+            <td>{{ log.endpoint }}</td>
+            <td>{{ log.httpMethod }}</td>
+            <td>{{ log.responseStatus }}</td>
+            <td>{{ log.executionTimeMs }}</td>
+            <td>{{ log.errorMessage || '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
+ 

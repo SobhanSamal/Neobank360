@@ -1,0 +1,62 @@
+<section class="insights-page">
+
+  <div class="page-head">
+    <div>
+      <h1>Financial Insights</h1>
+      <p>Income, expenses, and savings across your accounts</p>
+    </div>
+
+    <button class="refresh-btn" (click)="loadInsights()">
+      Refresh
+    </button>
+  </div>
+
+  <!-- ✅ LOADING -->
+  <div *ngIf="loading" class="summary-grid">
+    <div class="skeleton-card" *ngFor="let i of [1,2,3]"></div>
+  </div>
+
+  <!-- ✅ ERROR -->
+  <div *ngIf="error" class="alert">{{ error }}</div>
+
+  <!-- ✅ DATA -->
+  <ng-container *ngIf="!loading && insights">
+
+    <!-- ✅ STATS -->
+    <div class="summary-grid">
+
+      <div class="metric-card income">
+        <span>Total Income</span>
+        <strong>{{ formatCurrency(insights.totalIncome) }}</strong>
+      </div>
+
+      <div class="metric-card expense">
+        <span>Total Expense</span>
+        <strong>{{ formatCurrency(insights.totalExpense) }}</strong>
+      </div>
+
+      <div class="metric-card" [class.negative]="insights.savings < 0">
+        <span>Savings</span>
+        <strong>{{ formatCurrency(insights.savings) }}</strong>
+      </div>
+
+    </div>
+
+    <!-- ✅ CHART -->
+    <div class="chart-panel">
+      <h2>Six Month Trend</h2>
+
+      <div class="chart-frame">
+        <canvas baseChart
+                [type]="'bar'"
+                [data]="chartData"
+                [options]="chartOptions">
+        </canvas>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</section>
+``

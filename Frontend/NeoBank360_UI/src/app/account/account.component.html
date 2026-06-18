@@ -1,0 +1,201 @@
+
+
+<section class="account-wrap">
+  <div class="account-grid">
+    <div class="card">
+      <h2>Create Account</h2>
+      <form [formGroup]="form" (ngSubmit)="createAccount()">
+        <div class="form-row">
+          <div class="field-col">
+            <label>Full Name <span class="auto-tag">auto-filled</span></label>
+            <input type="text" formControlName="fullName" placeholder="Loading..." class="autofill" readonly />
+          </div>
+          <div class="field-col">
+            <label>Gender</label>
+            <select formControlName="gender">
+              <option value="" disabled>Select gender</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
+            </select>
+            <p class="field-error" *ngIf="hasError('gender', 'required')">Gender is required.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>Date of Birth</label>
+            <input type="date" formControlName="dob" />
+            <p class="field-error" *ngIf="hasError('dob', 'required')">Date of birth is required.</p>
+            <p class="field-error" *ngIf="hasError('dob', 'minAge')">You must be at least 15 years old.</p>
+          </div>
+          <div class="field-col">
+            <label>Mobile Number</label>
+            <input type="tel" formControlName="mobile" placeholder="10-digit mobile number" maxlength="10" />
+            <p class="field-error" *ngIf="hasError('mobile', 'required')">Mobile number is required.</p>
+            <p class="field-error" *ngIf="hasError('mobile', 'pattern')">Enter a valid 10-digit mobile number.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>Email Address <span class="auto-tag">auto-filled</span></label>
+            <input type="email" formControlName="email" placeholder="Loading..." class="autofill" readonly />
+          </div>
+          <div class="field-col">
+            <label>Aadhaar Number</label>
+            <input type="text" formControlName="aadhaar" placeholder="12-digit Aadhaar number" maxlength="12" />
+            <p class="field-error" *ngIf="hasError('aadhaar', 'required')">Aadhaar number is required.</p>
+            <p class="field-error" *ngIf="hasError('aadhaar', 'pattern')">Enter a valid 12-digit Aadhaar number.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>PAN Number</label>
+            <input type="text" formControlName="pan" placeholder="e.g. ABCDE1234F" maxlength="10" style="text-transform:uppercase" />
+            <p class="field-error" *ngIf="hasError('pan', 'required')">PAN number is required.</p>
+            <p class="field-error" *ngIf="hasError('pan', 'pattern')">Enter a valid PAN (e.g. ABCDE1234F).</p>
+          </div>
+          <div class="field-col">
+            <label>Address Line</label>
+            <input type="text" formControlName="addressLine1" placeholder="House/Flat, Street, Area" maxlength="120" />
+            <p class="field-error" *ngIf="hasError('addressLine1', 'required')">Address is required.</p>
+            <p class="field-error" *ngIf="hasError('addressLine1', 'minlength')">Address must be at least 5 characters.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>State</label>
+            <select formControlName="state">
+              <option value="" disabled>Select state</option>
+              <option *ngFor="let state of stateOptions | keyvalue" [value]="state.key">{{ state.key }}</option>
+            </select>
+            <p class="field-error" *ngIf="hasError('state', 'required')">State is required.</p>
+          </div>
+          <div class="field-col">
+            <label>District</label>
+            <select formControlName="district">
+              <option value="" disabled>Select district</option>
+              <option *ngFor="let district of getDistricts(form.get('state')?.value)" [value]="district">{{ district }}</option>
+            </select>
+            <p class="field-error" *ngIf="hasError('district', 'required')">District is required.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>City</label>
+            <input type="text" formControlName="city" placeholder="Enter city name" maxlength="60" />
+            <p class="field-error" *ngIf="hasError('city', 'required')">City is required.</p>
+            <p class="field-error" *ngIf="hasError('city', 'minlength')">City must be at least 2 characters.</p>
+          </div>
+          <div class="field-col">
+            <label>Pincode</label>
+            <input type="text" formControlName="pincode" placeholder="6-digit pincode" maxlength="6" />
+            <p class="field-error" *ngIf="hasError('pincode', 'required')">Pincode is required.</p>
+            <p class="field-error" *ngIf="hasError('pincode', 'pattern')">Enter a valid 6-digit pincode.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>Nominee Name</label>
+            <input type="text" formControlName="nomineeName" placeholder="Nominee full name" maxlength="100" />
+            <p class="field-error" *ngIf="hasError('nomineeName', 'required')">Nominee name is required.</p>
+          </div>
+          <div class="field-col">
+            <label>Nominee Relation</label>
+            <select formControlName="nomineeRelation">
+              <option value="" disabled>Select relation</option>
+              <option *ngFor="let relation of nomineeRelationOptions" [value]="relation">{{ relation }}</option>
+            </select>
+            <p class="field-error" *ngIf="hasError('nomineeRelation', 'required')">Nominee relation is required.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-col">
+            <label>Nominee Mobile</label>
+            <input type="tel" formControlName="nomineeMobile" placeholder="10-digit (optional)" maxlength="10" />
+            <p class="field-error" *ngIf="hasError('nomineeMobile', 'pattern')">Enter a valid 10-digit mobile number.</p>
+          </div>
+          <div class="field-col">
+            <label>Account Type</label>
+            <select formControlName="accountType">
+              <option *ngFor="let option of accountTypeOptions" [value]="option.value">{{ option.label }}</option>
+            </select>
+            <p class="hint">{{ selectedTypeDescription }}</p>
+            <p class="field-error" *ngIf="hasError('accountType', 'required')">Please select account type.</p>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="creating || form.invalid">
+          {{ creating ? 'Creating...' : 'Create Account' }}
+        </button>
+      </form>
+
+      <p class="ok" *ngIf="success">{{ success }}</p>
+      <p class="err" *ngIf="error">{{ error }}</p>
+    </div>
+
+    <div class="card">
+      <h2>My Accounts</h2>
+      <p *ngIf="loading">Loading accounts...</p>
+
+      <ul class="list" *ngIf="!loading && accounts.length > 0">
+        <li *ngFor="let account of accounts" (click)="viewAccount(account.id)">
+          <div>
+            <strong>{{ account.accountNumber }}</strong>
+            <small>{{ displayType(account.accountType) }}</small>
+          </div>
+          <span>₹ {{ account.balance }}</span>
+        </li>
+      </ul>
+
+      <p *ngIf="!loading && accounts.length === 0">No accounts yet. Create your first account.</p>
+    </div>
+
+    <div class="card" *ngIf="selectedAccount">
+      <h2>Account Details</h2>
+
+      <div class="detail-section">
+        <p class="section-label">Account Info</p>
+        <div class="detail"><span>Account Number</span><strong>{{ selectedAccount.accountNumber }}</strong></div>
+        <div class="detail"><span>Account Type</span><strong>{{ displayType(selectedAccount.accountType) }}</strong></div>
+        <div class="detail"><span>Balance</span><strong>₹ {{ selectedAccount.balance }}</strong></div>
+      </div>
+
+      <div class="detail-section" *ngIf="selectedDetails">
+        <p class="section-label">Personal Info</p>
+        <div class="detail"><span>Full Name</span><strong>{{ selectedDetails.fullName }}</strong></div>
+        <div class="detail"><span>Gender</span><strong>{{ selectedDetails.gender }}</strong></div>
+        <div class="detail"><span>Date of Birth</span><strong>{{ selectedDetails.dob }}</strong></div>
+        <div class="detail"><span>Mobile</span><strong>{{ selectedDetails.mobile }}</strong></div>
+        <div class="detail"><span>Alternate Mobile</span><strong>{{ selectedDetails.alternateMobile || 'N/A' }}</strong></div>
+        <div class="detail"><span>Email</span><strong>{{ selectedDetails.email }}</strong></div>
+      </div>
+
+      <div class="detail-section" *ngIf="selectedDetails">
+        <p class="section-label">KYC Info</p>
+        <div class="detail"><span>Aadhaar</span><strong>XXXX-XXXX-{{ selectedDetails.aadhaar.slice(-4) }}</strong></div>
+        <div class="detail"><span>PAN</span><strong>{{ selectedDetails.pan }}</strong></div>
+      </div>
+
+      <div class="detail-section" *ngIf="selectedDetails">
+        <p class="section-label">Address & Nominee</p>
+        <div class="detail"><span>Address</span><strong>{{ selectedDetails.addressLine1 }}</strong></div>
+        <div class="detail"><span>City</span><strong>{{ selectedDetails.city }}</strong></div>
+        <div class="detail"><span>State</span><strong>{{ selectedDetails.state }}</strong></div>
+        <div class="detail"><span>District</span><strong>{{ selectedDetails.district || 'N/A' }}</strong></div>
+        <div class="detail"><span>Pincode</span><strong>{{ selectedDetails.pincode }}</strong></div>
+        <div class="detail"><span>Nominee</span><strong>{{ selectedDetails.nomineeName }}</strong></div>
+        <div class="detail"><span>Relation</span><strong>{{ selectedDetails.nomineeRelation }}</strong></div>
+        <div class="detail"><span>Nominee Mobile</span><strong>{{ selectedDetails.nomineeMobile || 'N/A' }}</strong></div>
+      </div>
+
+      <p class="hint" *ngIf="!selectedDetails">Personal details available after account creation in this session.</p>
+    </div>
+  </div>
+</section>

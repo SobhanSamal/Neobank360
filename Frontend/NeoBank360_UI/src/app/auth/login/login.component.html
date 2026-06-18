@@ -1,0 +1,82 @@
+<app-navbar></app-navbar>
+<section class="login-page">
+  <div class="login-shell">
+    <aside class="brand-pane">
+      <p class="brand-chip">NEOBANK360</p>
+      <h1>Secure Banking, Simplified</h1>
+      <p>
+        Access your accounts, review transactions, and manage your digital banking with confidence.
+        NeoBank360 gives you a single secure place to monitor balances, move funds, and stay in control
+        of every account activity.
+      </p>
+      <p>
+        Built for both customers and administrators, the platform is designed for speed, clarity, and
+        security-first operations in daily banking workflows.
+      </p>
+      <ul>
+        <li>Role-based secure access with protected routes</li>
+        <li>Quick account overview with clean dashboard cards</li>
+        <li>Real-time balance updates after every transaction</li>
+        <li>Smart transaction history with filtering and sorting</li>
+        <li>Fast profile and account management in one place</li>
+        <li>Reliable session handling with token-based security</li>
+      </ul>
+    </aside>
+
+    <div class="login-card">
+      <div class="form-box">
+        <h2>Welcome back</h2>
+        <p class="subtitle">Sign in to continue to your dashboard</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+          <label>
+            Email
+            <input type="email" formControlName="email" placeholder="you@example.com" autocomplete="email" />
+          </label>
+          @if (hasError('email', 'required')) {
+            <p class="error">Email is required.</p>
+          }
+          @if (hasError('email', 'email')) {
+            <p class="error">Please enter a valid email.</p>
+          }
+
+          <label>
+            Password
+            <div class="password-wrap">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="toggle-btn"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              >
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+          </label>
+          @if (hasError('password', 'required')) {
+            <p class="error">Password is required.</p>
+          }
+
+          @if (errorMessage) {
+            <div class="error-box">{{ errorMessage }}</div>
+          }
+
+          <button type="submit" class="submit-btn" [disabled]="loading">
+            {{ loading ? 'Signing in...' : 'Sign in' }}
+          </button>
+        </form>
+
+        <p class="footer-text">
+          New user?
+          <a routerLink="/register">Create account</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

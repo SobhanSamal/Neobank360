@@ -1,0 +1,148 @@
+/* ✅ Page */
+.page-container {
+  padding: 24px;
+  background: #f4f6f9;
+  min-height: 100vh;
+}
+
+/* ✅ Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ✅ Button */
+.primary-btn {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ✅ Summary */
+.summary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.card-sm {
+  flex: 1;
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card-sm h3 {
+  color: #1e3a8a;
+  margin-top: 6px;
+}
+
+/* ✅ Cards */
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ✅ Form Header */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ✅ Close button */
+.close-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ✅ Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+/* ✅ Input */
+.form-group label {
+  font-size: 13px;
+  color: #374151;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* ✅ Submit button */
+.submit-btn {
+  width: 100%;
+  margin-top: 12px;
+  background: #1e3a8a;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* ✅ Search */
+.search {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+}
+
+/* ✅ Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #1e3a8a;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background: #f9fafb;
+}
+
+/* ✅ Highlight */
+.bold {
+  font-weight: 600;
+  color: #1e3a8a;
+}

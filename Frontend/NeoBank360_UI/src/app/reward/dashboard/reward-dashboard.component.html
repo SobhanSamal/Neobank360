@@ -1,0 +1,70 @@
+<section class="reward-page">
+ 
+  <div class="reward-shell">
+ 
+    <!-- HEADER -->
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Rewards</p>
+        <h1>Reward Points</h1>
+      </div>
+ 
+      <a routerLink="/bills" class="link-button">
+        Manage Bills
+      </a>
+ 
+      <a routerLink="/rewards/history" class="link-button secondary">
+        Reward History
+      </a>
+    </header>
+ 
+    <!-- ERROR -->
+    <p class="err" *ngIf="error">
+      {{ error }}
+    </p>
+ 
+    <!-- LOADING -->
+    <p class="loading" *ngIf="loading">
+      Loading reward balance...
+    </p>
+ 
+    <!-- CONTENT -->
+    <div *ngIf="!loading && reward" class="reward-grid">
+ 
+      <!-- BALANCE -->
+      <section class="balance-panel">
+        <small>Current Balance</small>
+ 
+        <!-- ✅ FIXED DISPLAY -->
+        <strong>
+          {{ reward.pointsBalance | number:'1.1-2' }}
+        </strong>
+ 
+        <span>points</span>
+ 
+        <!-- ✅ INFO -->
+        <p class="reward-info">
+          Earn 0.1 points for every ₹10 spent
+        </p>
+      </section>
+ 
+      <!-- SUMMARY -->
+      <section class="history-panel">
+        <h2>Accrual Summary</h2>
+ 
+        <p>
+          Points are awarded based on the bill payment amount.
+        </p>
+ 
+        <div class="metric">
+          <span>Last Updated</span>
+          <b>{{ formatUpdated(reward.lastUpdated) }}</b>
+        </div>
+      </section>
+ 
+    </div>
+ 
+  </div>
+ 
+</section>
+ 

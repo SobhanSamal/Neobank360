@@ -1,0 +1,58 @@
+<section class="admin-surface">
+
+  <div class="page-head">
+    <div>
+      <h1>System Health</h1>
+      <p>Runtime status for platform operations.</p>
+    </div>
+    <button class="primary-btn" (click)="loadHealth()">Refresh</button>
+  </div>
+
+  <div *ngIf="loading" class="panel loading">
+    Checking system health...
+  </div>
+
+  <div *ngIf="error" class="alert">
+    {{ error }}
+  </div>
+
+  <!-- ✅ HEALTH GRID -->
+  <section *ngIf="!loading && health" class="health-grid">
+
+    <div class="card status-card">
+      <h4>Database</h4>
+      <p [class.green]="health.dbStatus === 'UP'"
+         [class.red]="health.dbStatus === 'DOWN'">
+        {{ health.dbStatus }}
+      </p>
+    </div>
+
+    <div class="card">
+      <h4>Total Users</h4>
+      <p>{{ health.totalUsers }}</p>
+      <span>Active: {{ health.activeUsers }}</span>
+    </div>
+
+    <div class="card">
+      <h4>Accounts</h4>
+      <p>{{ health.totalAccounts }}</p>
+    </div>
+
+    <div class="card">
+      <h4>Transactions</h4>
+      <p>{{ health.totalTransactions }}</p>
+    </div>
+
+    <div class="card">
+      <h4>Active Sessions</h4>
+      <p>{{ health.activeSessions }}</p>
+    </div>
+
+    <div class="card">
+      <h4>Uptime</h4>
+      <p>{{ formatUptime(health.uptime) }}</p>
+    </div>
+
+  </section>
+
+</section>

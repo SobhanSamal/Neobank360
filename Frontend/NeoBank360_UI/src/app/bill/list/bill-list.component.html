@@ -1,0 +1,122 @@
+<section class="bill-page">
+
+  <div class="bill-shell">
+
+    <!-- ✅ HEADER -->
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Bills</p>
+        <h1>Bill Management</h1>
+      </div>
+
+      <a routerLink="/bills/create" class="primary-link">
+        <span>＋</span> Create Bill
+      </a>
+    </header>
+
+    <!-- ✅ ERROR -->
+    <p class="err" *ngIf="error">{{ error }}</p>
+
+    <!-- ✅ LOADING -->
+    <p class="loading" *ngIf="loading">Loading bills...</p>
+
+    <!-- ✅ EMPTY -->
+    <div *ngIf="!loading && categories.length === 0" class="empty">
+      No bills found
+    </div>
+
+    <!-- ✅ CATEGORY LOOP -->
+    <div *ngFor="let category of categories" class="category-section">
+
+      <h2 class="category-title">{{ category }}</h2>
+
+      <div class="bill-list">
+
+        <article class="bill-card"
+                 *ngFor="let bill of groupedBills[category]">
+
+          <!-- ✅ MAIN -->
+          <div class="bill-main">
+
+            <div>
+              <h3>{{ bill.billerName }}</h3>
+              <p>Due {{ bill.dueDate }}</p>
+
+              <p class="account-info">
+                {{ accountLabel(bill) }}
+              </p>
+            </div>
+
+            <strong>{{ formatCurrency(bill.amount) }}</strong>
+
+          </div>
+
+          <!-- ✅ STATUS -->
+          <div class="bill-meta">
+            <span class="status" [ngClass]="statusClass(bill)">
+              {{ bill.status }}
+            </span>
+          </div>
+
+          <!-- ✅ PAY BUTTON -->
+          <button
+            *ngIf="bill.status === 'PENDING'"
+            [disabled]="updatingId === bill.id"
+            (click)="markPaid(bill)">
+
+            {{ updatingId === bill.id ? 'Processing...' : 'Pay' }}
+
+          </button>
+
+          <!-- ✅ DROPDOWN CONFIRM -->
+          <div *ngIf="pendingBill && pendingBill.id === bill.id"
+               class="action-dropdown">
+
+            <p>
+              <strong>Biller:</strong>
+              {{ bill.billerName }}
+            </p>
+
+            <p>
+              <strong>Amount:</strong>
+              {{ formatCurrency(bill.amount) }}
+            </p>
+
+            <p>
+              <strong>Paid From:</strong>
+              {{ selectedAccountLabel() }}
+            </p>
+
+            <!-- ✅ ACTION BUTTONS -->
+            <div class="dropdown-actions">
+
+              <button
+                class="confirm-btn"
+                [disabled]="updatingId === bill.id"
+                (click)="confirmMarkPaid()">
+
+                ✅ Confirm
+
+              </button>
+
+              <button
+                class="cancel-btn"
+                (click)="cancelMarkPaid()">
+
+                ❌ Cancel
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

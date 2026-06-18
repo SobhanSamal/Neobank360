@@ -1,0 +1,110 @@
+<div class="page">
+
+  <div class="loan-grid">
+
+    <!-- ✅ LEFT FORM -->
+    <div class="loan-card">
+
+      <h2>🏦 Apply Loan</h2>
+
+      <label>Loan Product</label>
+      <select
+        [(ngModel)]="form.productId"
+        (change)="onProductChange(form.productId)">
+        <option [ngValue]="0">Select Product</option>
+        <option *ngFor="let p of products" [ngValue]="p.id">
+          {{ p.productName }}
+        </option>
+      </select>
+
+      <label>Loan Amount</label>
+      <input
+        type="number"
+        [(ngModel)]="form.requestedAmount"
+        (input)="calculateEMI()"
+        placeholder="Enter amount" />
+
+      <label>Tenure (Months)</label>
+      <input
+        type="number"
+        [(ngModel)]="form.requestedTenureMonths"
+        (input)="calculateEMI()"
+        placeholder="Enter tenure" />
+
+      <button class="apply-btn" (click)="applyLoan()">
+        🚀 Apply Loan
+      </button>
+
+    </div>
+
+    <!-- ✅ RIGHT SUMMARY -->
+    <div class="summary-card">
+
+      <h3>📊 Loan Summary</h3>
+
+      <div class="summary-item">
+        <span>Loan Amount</span>
+        <strong>₹ {{ form.requestedAmount || 0 }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Tenure</span>
+        <strong>{{ form.requestedTenureMonths || 0 }} months</strong>
+      </div>
+
+      <div class="summary-item highlight">
+        <span>Monthly EMI</span>
+        <strong>₹ {{ emi | number:'1.0-0' }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Total Payable</span>
+        <strong>
+          ₹ {{ emi * form.requestedTenureMonths | number:'1.0-0' }}
+        </strong>
+      </div>
+
+      <div class="info-box">
+        💡 EMI is calculated using reducing balance method.
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ✅ ✅ NEW: PRODUCT TABLE -->
+  <div class="products-table-card" *ngIf="products.length > 0">
+
+    <h3>📋 Available Loan Products</h3>
+
+    <table class="loan-table">
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Rate</th>
+          <th>Tenures</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of products"
+            (click)="onProductChange(p.id)"
+            [class.selected-row]="p.id === form.productId">
+
+          <td>{{ p.productName }}</td>
+          <td>₹ {{ p.minAmount }}</td>
+          <td>₹ {{ p.maxAmount }}</td>
+          <td>{{ p.annualInterestRate }}%</td>
+          <td>{{ p.allowedTenures }}</td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

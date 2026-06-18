@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+<section class="register-page">
+  <div class="register-shell">
+    <aside class="info-pane">
+      <p class="info-chip">CREATE ACCOUNT</p>
+      <h2>Join NeoBank360</h2>
+      <p>
+        Open your digital banking account in minutes and start managing your finances securely.
+      </p>
+      <ul>
+        <li>Instant account creation</li>
+        <li>Secure password encryption</li>
+        <li>Email verification included</li>
+      </ul>
+    </aside>
+
+    <div class="register-card">
+    <h1>NeoBank Registration</h1>
+
+    @if (successMessage) {
+      <div class="alert success">{{ successMessage }}</div>
+    }
+
+    @if (errorMessage) {
+      <div class="alert error">{{ errorMessage }}</div>
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" type="text" formControlName="fullName" />
+      @if (hasError('fullName', 'required')) {
+        <small class="field-error">Full name is required.</small>
+      }
+      @if (hasError('fullName', 'minlength')) {
+        <small class="field-error">Full name must be at least 3 characters.</small>
+      }
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+      @if (hasError('email', 'required')) {
+        <small class="field-error">Email is required.</small>
+      }
+      @if (hasError('email', 'email')) {
+        <small class="field-error">Enter a valid email address.</small>
+      }
+
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" />
+      <small class="hint">At least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special.</small>
+      @if (hasError('password', 'required')) {
+        <small class="field-error">Password is required.</small>
+      }
+      @if (hasError('password', 'minlength') || hasError('password', 'pattern')) {
+        <small class="field-error">Password does not meet complexity requirements.</small>
+      }
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+      @if (hasError('confirmPassword', 'required')) {
+        <small class="field-error">Confirm password is required.</small>
+      }
+      @if (passwordsDoNotMatch()) {
+        <small class="field-error">Passwords do not match.</small>
+      }
+
+      <button type="submit" [disabled]="loading || registerForm.invalid">
+        {{ loading ? 'Registering...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="note">
+      Already registered? <a routerLink="/login">Go to login</a>
+    </p>
+  </div>
+
+  </div>
+</section>

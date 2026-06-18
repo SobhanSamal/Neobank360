@@ -1,0 +1,138 @@
+<div class="dashboard-page">
+ 
+  <!-- Header -->
+  <div class="header-section">
+    
+<div>
+    <h1>Budget Dashboard</h1>
+    <p>Track financial performance across all categories</p>
+  </div>
+
+  <div style="display:flex;gap:12px;align-items:center;">
+
+    <!-- ✅ MONTH FILTER -->
+    <div>
+      <label>Month</label><br>
+
+      <select [(ngModel)]="selectedMonth"
+              (change)="onMonthChange()">
+
+        <option *ngFor="let m of months" [value]="m">
+          {{ m | date:'MMMM yyyy' }}
+        </option>
+
+      </select>
+    </div>
+
+    <!-- ✅ EXISTING BUTTON -->
+    <button
+      class="back-btn"
+      style="background:#0f766e;"
+      (click)="goToCreate()">
+      Create Budget
+    </button>
+
+  </div>
+
+  </div>
+ 
+  <!-- Stats -->
+  <div class="stats-grid">
+ 
+    <div class="stat-card">
+      <h3>Total Budget</h3>
+      <h2>{{ totalBudget() | currency:'INR' }}</h2>
+    </div>
+ 
+    <div class="stat-card">
+      <h3>Total Spent</h3>
+      <h2>{{ totalSpent() | currency:'INR' }}</h2>
+    </div>
+ 
+    <div class="stat-card">
+      <h3>Total Remaining</h3>
+      <h2>{{ totalRemaining() | currency:'INR' }}</h2>
+    </div>
+ 
+    <div class="stat-card danger">
+      <h3>Highest Spending</h3>
+      <h2>{{ highestCategory() }}</h2>
+    </div>
+ 
+  </div>
+ 
+  <!-- BAR -->
+  <div class="analytics-panel">
+    <h2>Budget vs Spending</h2>
+    <canvas baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType">
+    </canvas>
+  </div>
+ 
+  <!-- PIE -->
+  <div class="analytics-panel">
+    <h2>Spending Distribution</h2>
+    <canvas baseChart
+      [data]="pieChartData"
+      [type]="pieChartType">
+    </canvas>
+  </div>
+ 
+ 
+  <!-- CATEGORY -->
+  <div class="analytics-panel">
+    <h2>Category Performance</h2>
+ 
+    <div *ngFor="let item of summary" class="category-row">
+ 
+      <div class="category-header">
+        <strong>{{ item.category }}</strong>
+        <span>{{ item.utilizationPercentage }}%</span>
+      </div>
+ 
+      <div class="progress-bar">
+        <div class="progress-fill"
+          [style.width.%]="item.utilizationPercentage"
+          [ngClass]="{
+            green: item.utilizationPercentage < 75,
+            orange: item.utilizationPercentage >= 75 && item.utilizationPercentage < 100,
+            red: item.utilizationPercentage >= 100
+          }">
+        </div>
+      </div>
+ 
+      <div class="category-footer">
+        <span>Spent: {{ item.spentAmount | currency:'INR' }}</span>
+        <span>Remaining: {{ item.remainingAmount | currency:'INR' }}</span>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <!-- TABLE -->
+  <div class="table-panel">
+    <h2>Budget Summary Table</h2>
+ 
+    <div class="table-header">
+      <span>Category</span>
+      <span>Limit</span>
+      <span>Spent</span>
+      <span>Remaining</span>
+      <span>Utilization</span>
+    </div>
+ 
+    <div class="table-row" *ngFor="let item of summary">
+ 
+      <span>{{ item.category }}</span>
+      <span>{{ item.limitAmount | currency:'INR' }}</span>
+      <span>{{ item.spentAmount | currency:'INR' }}</span>
+      <span>{{ item.remainingAmount | currency:'INR' }}</span>
+      <span>{{ item.utilizationPercentage }}%</span>
+ 
+    </div>
+  </div>
+ 
+</div>
+ 

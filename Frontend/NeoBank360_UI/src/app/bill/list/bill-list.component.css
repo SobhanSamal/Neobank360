@@ -1,0 +1,134 @@
+/* PAGE */
+.bill-page {
+  background: #f8fafc;
+  padding: 30px;
+}
+
+.bill-shell {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* HEADER */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: bold;
+  color: #0f766e;
+}
+
+.primary-link {
+  padding: 8px 14px;
+  background: #0f766e;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+/* BILL CARD */
+.bill-card {
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.bill-main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.account-info {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* STATUS */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.status.paid {
+  background: #dcfce7;
+  color: green;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.overdue {
+  background: #fee2e2;
+  color: red;
+}
+
+/* BUTTON */
+button {
+  margin-top: 10px;
+  padding: 7px 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+/* ✅ DROPDOWN */
+.action-dropdown {
+  margin-top: 10px;
+  padding: 12px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.action-dropdown p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+/* ACTION BUTTONS */
+.dropdown-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+/* CONFIRM */
+.confirm-btn {
+  background: #16a34a;
+}
+
+.confirm-btn:hover {
+  background: #15803d;
+}
+
+/* CANCEL */
+.cancel-btn {
+  background: #dc2626;
+}
+
+.cancel-btn:hover {
+  background: #b91c1c;
+}
+
+/* STATES */
+.loading, .err, .empty {
+  margin: 10px 0;
+}
+
+.err {
+  color: red;
+}

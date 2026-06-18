@@ -1,0 +1,110 @@
+.container {
+  padding: 20px;
+}
+
+/* ✅ HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.count {
+  font-weight: bold;
+  color: #334155;
+}
+
+/* ✅ CONTROLS */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.controls input {
+  padding: 8px 12px;
+  width: 260px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.sort-btn {
+  padding: 8px 12px;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sort-btn:hover {
+  background: #cbd5f5;
+}
+
+/* ✅ TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  background: #1e293b;
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #f8fafc;
+}
+
+/* ✅ BADGE */
+.badge {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* ✅ AMOUNT */
+.amount {
+  font-weight: bold;
+  color: #16a34a;
+}
+
+/* ✅ BUTTON */
+.btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background: #2563eb;
+}
+
+/* ✅ EMPTY + LOADING */
+.loading {
+  color: #555;
+}
+
+.empty {
+  color: green;
+  font-weight: bold;
+}

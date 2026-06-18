@@ -1,0 +1,77 @@
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2>⏳ Pending Approvals</h2>
+    <span class="count">Total: {{ pendingList.length }}</span>
+  </div>
+
+  <!-- SEARCH + SORT -->
+  <div class="controls">
+
+    <input
+      type="text"
+      placeholder="🔍 Search by name or product..."
+      [(ngModel)]="searchText"
+    />
+
+    <button class="sort-btn" (click)="sortByDate()">
+      Sort by Date ↑
+    </button>
+
+  </div>
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="loading">
+    ⏳ Loading approvals...
+  </div>
+
+  <!-- EMPTY -->
+  <div *ngIf="!loading && pendingList.length === 0" class="empty">
+    🎉 No pending approvals — all caught up!
+  </div>
+
+  <!-- TABLE -->
+  <table *ngIf="!loading && pendingList.length > 0">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Applicant</th>
+        <th>Product</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th action-col>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let app of filteredList">
+
+        <td>{{ app.id }}</td>
+
+        <td>
+          <span class="badge">{{ app.type }}</span>
+        </td>
+
+        <td>{{ app.applicantName }}</td>
+        <td>{{ app.productName }}</td>
+
+        <td class="amount">
+{{ app.requestedAmount | currency:'INR' }}     </td>
+
+        <td>{{ app.appliedAt | date:'mediumDate' }}</td>
+
+        <td>
+          <button class="btn" (click)="review(app)">
+            Review
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

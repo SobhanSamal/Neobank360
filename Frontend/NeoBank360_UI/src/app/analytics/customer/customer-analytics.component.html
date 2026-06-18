@@ -1,0 +1,40 @@
+<section class="customer-analytics">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Customer analytics</p>
+      <h1>Spending, budget adherence, and net worth</h1>
+      <p class="lead">Interactive views for personal financial planning.</p>
+    </div>
+    <label class="control">
+      <span>Months</span>
+      <select [(ngModel)]="months" (change)="load()">
+        <option [ngValue]="3">3 months</option>
+        <option [ngValue]="6">6 months</option>
+        <option [ngValue]="12">12 months</option>
+      </select>
+    </label>
+  </header>
+ 
+  <p class="error" *ngIf="error">{{ error }}</p>
+  <p class="loading" *ngIf="loading">Loading your analytics...</p>
+ 
+  <div class="grid" *ngIf="!loading && !error">
+    <article class="panel">
+      <h2>Spending distribution</h2>
+      <canvas baseChart [data]="spendingChart" [type]="'doughnut'"></canvas>
+    </article>
+    <article class="panel">
+      <h2>Budget vs actual</h2>
+      <canvas baseChart [data]="budgetChart" [type]="'bar'"></canvas>
+    </article>
+    <article class="panel">
+      <h2>Net worth progression</h2>
+      <canvas baseChart [data]="netWorthChart" [type]="'line'"></canvas>
+    </article>
+    <article class="panel">
+      <h2>Reward accrual</h2>
+      <canvas baseChart [data]="rewardsChart" [type]="'line'"></canvas>
+    </article>
+  </div>
+</section>
+ 

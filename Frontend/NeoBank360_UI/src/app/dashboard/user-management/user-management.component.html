@@ -1,0 +1,91 @@
+<section class="user-mgmt-page">
+  <div class="user-mgmt-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1>User Management</h1>
+      </div>
+    </header>
+ 
+    <p class="err" *ngIf="error">{{ error }}</p>
+    <p class="loading" *ngIf="loading">Loading users...</p>
+ 
+    <div class="table-wrap" *ngIf="!loading && users.length > 0">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Registered</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <span class="status-chip" [class.active]="user.active" [class.inactive]="!user.active">
+                {{ user.active ? 'ACTIVE' : 'INACTIVE' }}
+              </span>
+            </td>
+            <td>{{ formatDate(user.createdAt) }}</td>
+            <td class="action-cell">
+              <button type="button" class="btn" (click)="toggleStatus(user)" [disabled]="savingUserId === user.id">
+                {{ savingUserId === user.id ? 'Saving...' : (user.active ? 'Deactivate' : 'Activate') }}
+              </button>
+              <button type="button" class="btn secondary" (click)="viewActivity(user)">Activity</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+ 
+    <div class="pager" *ngIf="!loading && totalPages > 1">
+      <button type="button" class="btn secondary" (click)="prevPage()" [disabled]="page === 0">Prev</button>
+      <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button type="button" class="btn secondary" (click)="nextPage()" [disabled]="page >= totalPages - 1">Next</button>
+    </div>
+ 
+    <div class="empty" *ngIf="!loading && users.length === 0">
+      No users found.
+    </div>
+  </div>
+</section>
+ 
+<div class="modal-backdrop" *ngIf="selectedUserActivity" (click)="closeActivity()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <h2>User Activity</h2>
+    <p>User ID: {{ selectedUserActivity.userId }}</p>
+ 
+    <h3>Last Transactions</h3>
+    <div class="activity-list" *ngIf="selectedUserActivity.transactions.length > 0; else noTx">
+      <div class="activity-row" *ngFor="let tx of selectedUserActivity.transactions">
+        <strong>{{ tx.type }}</strong>
+        <span>{{ tx.accountNumber }}</span>
+        <span>{{ tx.description }}</span>
+        <span>{{ tx.amount }}</span>
+        <span>{{ formatDate(tx.transactionDate) }}</span>
+      </div>
+    </div>
+    <ng-template #noTx>
+      <p>No recent transactions.</p>
+    </ng-template>
+ 
+    <h3>Login Events</h3>
+    <div *ngIf="selectedUserActivity.loginEvents.length > 0; else noLogin">
+      <div *ngFor="let event of selectedUserActivity.loginEvents">{{ event }}</div>
+    </div>
+    <ng-template #noLogin>
+      <p>No login events available.</p>
+    </ng-template>
+ 
+    <button type="button" class="btn secondary" (click)="closeActivity()">Close</button>
+  </div>
+</div>
+ 

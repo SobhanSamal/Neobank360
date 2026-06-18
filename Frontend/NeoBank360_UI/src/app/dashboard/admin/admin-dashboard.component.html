@@ -1,0 +1,286 @@
+<div class="admin-dashboard-container">
+ 
+  <!-- Header Section -->
+  <section class="header-section">
+    <div class="header-content">
+      <h1>Admin Dashboard</h1>
+      <p class="subtitle">
+        Monitor all accounts and transactions on the platform
+      </p>
+    </div>
+  </section>
+ 
+  <!-- DAY 35 DASHBOARD METRICS -->
+ 
+  <section class="dashboard-metrics">
+ 
+    <div class="metric-card">
+      <h3>Total Users</h3>
+      <h2>{{ dashboard?.totalUsers || 0 }}</h2>
+    </div>
+ 
+    <div class="metric-card">
+      <h3>Total Accounts</h3>
+      <h2>{{ dashboard?.totalAccounts || 0 }}</h2>
+    </div>
+ 
+    <div class="metric-card">
+      <h3>Total Loans</h3>
+      <h2>{{ dashboard?.totalLoans || 0 }}</h2>
+    </div>
+ 
+    <div class="metric-card">
+      <h3>Pending Approvals</h3>
+      <h2>{{ dashboard?.pendingApprovals || 0 }}</h2>
+    </div>
+ 
+    <div class="metric-card">
+      <h3>Total Transactions</h3>
+      <h2>{{ dashboard?.totalTransactions || 0 }}</h2>
+    </div>
+ 
+  </section>
+ 
+  <!-- Main Content -->
+  <div class="main-content">
+ 
+    <!-- Filters & Controls -->
+    <section class="filters-section">
+ 
+      <div class="filters-wrapper">
+ 
+        <!-- Search Box -->
+        <div class="search-box">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+            placeholder="Search by account number..."
+            class="search-input"
+          />
+        </div>
+ 
+        <!-- Filter Dropdown -->
+        <div class="filter-group">
+          <label for="typeFilter">Account Type:</label>
+ 
+          <select
+            id="typeFilter"
+            [(ngModel)]="selectedAccountType"
+            (ngModelChange)="onTypeFilterChange()"
+            class="filter-select"
+          >
+            <option
+              *ngFor="let option of accountTypeOptions"
+              [value]="option.value">
+ 
+              {{ option.label }}
+ 
+            </option>
+          </select>
+ 
+        </div>
+ 
+      </div>
+ 
+      <!-- Stats -->
+      <div class="stats-row">
+ 
+        <div class="stat-card">
+          <p class="stat-label">Total Accounts</p>
+          <p class="stat-value">
+            {{ allAccounts.length }}
+          </p>
+        </div>
+ 
+        <div class="stat-card">
+          <p class="stat-label">Showing</p>
+          <p class="stat-value">
+            {{ filteredAccounts.length }}
+          </p>
+        </div>
+ 
+        <div class="stat-card">
+          <p class="stat-label">Total Balance</p>
+          <p class="stat-value">
+            {{
+              formatCurrency(
+                allAccounts.reduce(
+                  (sum, acc) => sum + acc.balance,
+                  0
+                )
+              )
+            }}
+          </p>
+        </div>
+ 
+      </div>
+ 
+    </section>
+ 
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-error">
+ 
+      <p
+        style="
+          margin: 0 0 12px;
+          font-weight: 600;
+        ">
+ 
+        {{ error }}
+ 
+      </p>
+ 
+      <button
+        class="btn btn-secondary"
+        (click)="error=''; loadAllAccounts()"
+        style="
+          font-size: 13px;
+          padding: 8px 12px;
+        ">
+ 
+        🔄 Retry Loading Accounts
+ 
+      </button>
+ 
+    </div>
+ 
+    <!-- Loading State -->
+    <div
+      *ngIf="loading"
+      class="loading-state">
+ 
+      <p>
+        Loading all accounts...
+      </p>
+ 
+    </div>
+ 
+    <!-- Empty State -->
+    <div
+      *ngIf="
+        !loading &&
+        filteredAccounts.length === 0 &&
+        allAccounts.length === 0
+      "
+      class="empty-state">
+ 
+      <p>
+        No accounts found in the system.
+      </p>
+ 
+    </div>
+ 
+    <!-- No Results -->
+    <div
+      *ngIf="
+        !loading &&
+        filteredAccounts.length === 0 &&
+        allAccounts.length > 0
+      "
+      class="no-results">
+ 
+      <p>
+        No accounts match your search criteria.
+      </p>
+ 
+      <button
+        class="btn btn-link"
+        (click)="searchTerm=''; selectedAccountType='ALL'; applyFilters()">
+ 
+        Clear Filters
+ 
+      </button>
+ 
+    </div>
+ 
+    <!-- Accounts Table -->
+    <section
+      *ngIf="
+        !loading &&
+        filteredAccounts.length > 0
+      "
+      class="accounts-table-section">
+ 
+      <div class="table-responsive">
+ 
+        <table class="accounts-table">
+ 
+          <thead>
+ 
+            <tr>
+ 
+              <th>Account Number</th>
+              <th>Account Type</th>
+              <th>Balance</th>
+              <th>Status</th>
+ 
+            </tr>
+ 
+          </thead>
+ 
+          <tbody>
+ 
+            <tr
+              *ngFor="
+                let account
+                of filteredAccounts
+              "
+              class="account-row">
+ 
+              <td class="account-number">
+                {{ account.accountNumber }}
+              </td>
+ 
+              <td>
+ 
+                <span
+                  class="badge"
+                  [ngClass]="
+                    'badge-' +
+                    account.accountType.toLowerCase()
+                  ">
+ 
+                  {{
+                    getAccountTypeLabel(
+                      account.accountType
+                    )
+                  }}
+ 
+                </span>
+ 
+              </td>
+ 
+              <td class="balance">
+                {{
+                  formatCurrency(
+                    account.balance
+                  )
+                }}
+              </td>
+ 
+              <td>
+ 
+                <span
+                  class="status-badge status-active">
+ 
+                  Active
+ 
+                </span>
+ 
+              </td>
+ 
+            </tr>
+ 
+          </tbody>
+ 
+        </table>
+ 
+      </div>
+ 
+    </section>
+ 
+  </div>
+ 
+</div>
+ 

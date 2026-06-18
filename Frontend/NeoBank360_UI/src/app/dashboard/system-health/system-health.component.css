@@ -1,0 +1,79 @@
+/* ✅ Layout */
+.health-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* ✅ Card */
+.card {
+  padding: 18px;
+  background: white;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* ✅ Headings */
+.card h4 {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* ✅ Value */
+.card p {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+/* ✅ Status Colors */
+.green {
+  color: #16a34a;
+}
+
+.red {
+  color: #dc2626;
+}
+
+/* ✅ Info small text */
+.card span {
+  font-size: 12px;
+  color: #777;
+}
+
+/* ✅ Special DB Card */
+.status-card {
+  border-left: 5px solid #007bff;
+}
+
+/* ✅ Loading */
+.loading {
+  padding: 15px;
+  font-style: italic;
+}
+
+/* ✅ Error */
+.alert {
+  margin-top: 10px;
+  padding: 10px;
+  background: #fee2e2;
+  color: #b91c1c;
+  border-radius: 6px;
+}
+
+/* ✅ Button */
+.primary-btn {
+  padding: 6px 12px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}

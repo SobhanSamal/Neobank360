@@ -1,0 +1,101 @@
+<section class="history-page">
+
+  <div class="history-shell">
+
+    <!-- ✅ HEADER -->
+    <div class="page-header">
+      <div>
+        <p class="eyebrow">Rewards</p>
+        <h1>Reward History</h1>
+      </div>
+
+      <a routerLink="/rewards" class="link-button">
+        Back to Rewards
+      </a>
+    </div>
+
+    <!-- ✅ ERROR / LOADING -->
+    <p class="err" *ngIf="error">{{ error }}</p>
+    <p class="loading" *ngIf="loading">Loading reward history...</p>
+
+    <!-- ✅ SUMMARY CARDS -->
+    <div *ngIf="!loading && !error && history.length > 0" class="card-grid">
+
+      <div class="summary-card">
+        <span>Total Bills</span>
+        <h2>{{ history.length }}</h2>
+      </div>
+
+      <div class="summary-card">
+        <span>Total Points</span>
+        <h2>
+          {{
+            history.reduce((sum, i) => sum + i.rewardPoints, 0)
+              | number:'1.0-0'
+          }}
+        </h2>
+      </div>
+
+      <div class="summary-card highlight">
+        <span>Total Amount</span>
+        <h2>
+          {{
+            history.reduce((sum, i) => sum + i.billAmount, 0)
+              | currency:'INR'
+          }}
+        </h2>
+      </div>
+
+    </div>
+
+    <!-- ✅ TABLE -->
+    <div *ngIf="!loading && !error" class="table-panel">
+
+      <p *ngIf="history.length === 0" class="empty">
+        No reward activity yet.
+      </p>
+
+      <table *ngIf="history.length > 0">
+
+        <thead>
+          <tr>
+            <th>Bill</th>
+            <th>Biller</th>
+            <th>Amount</th>
+            <th>Points</th>
+            <th>Paid Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let item of history">
+
+            <td class="bill-id">{{ item.billId }}</td>
+
+            <td>
+              <div class="biller-name">
+                {{ item.billerName }}
+                <span class="category">{{ item.category }}</span>
+              </div>
+            </td>
+
+            <td>{{ formatCurrency(item.billAmount) }}</td>
+
+            <td class="points">
+              +{{ item.rewardPoints | number:'1.0-0' }}
+            </td>
+
+            <td>{{ formatDate(item.paidAt) }}</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>

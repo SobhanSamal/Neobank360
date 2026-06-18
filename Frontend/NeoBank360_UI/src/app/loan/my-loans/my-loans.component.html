@@ -1,0 +1,92 @@
+<div class="page">
+
+  <!-- ✅ HEADER -->
+  <div class="header">
+    <h2>My Loans</h2>
+
+
+
+  </div>
+
+  <p class="sub-title">
+    Manage your loan accounts and view repayment schedules
+  </p>
+
+  <!-- ✅ SUMMARY CARDS -->
+  <div class="summary">
+
+    <div class="card">
+      <p>Total Loans</p>
+      <h3>{{ accounts.length }}</h3>
+    </div>
+
+    <div class="card">
+      <p>Total Principal</p>
+      <h3>₹ {{ totalPrincipal }}</h3>
+    </div>
+
+    <div class="card">
+      <p>Total EMI</p>
+      <h3>₹ {{ totalEmi }}</h3>
+    </div>
+
+  </div>
+
+  <!-- ✅ TABLE -->
+  <div class="table-card">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product</th>
+          <th>Principal</th>
+          <th>EMI</th>
+          <th>Tenure</th>
+          <th>Disbursed</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let account of accounts">
+
+          <td>#{{ account.id }}</td>
+
+          <td class="product">
+            {{ account.productName }}
+          </td>
+
+          <td>₹ {{ account.principalAmount }}</td>
+
+          <td class="emi">
+            ₹ {{ account.emiAmount }}
+          </td>
+
+          <td>{{ account.tenureMonths }} months</td>
+
+          <td>{{ account.disbursedAt | date:'mediumDate' }}</td>
+
+          <td>
+            <button class="view-btn"
+              (click)="openSchedule(account)">
+              View Schedule
+            </button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- ✅ EMPTY STATE -->
+  <div class="empty" *ngIf="accounts.length === 0">
+    No active loan accounts
+  </div>
+
+</div>

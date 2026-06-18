@@ -1,0 +1,165 @@
+.page {
+  padding: 24px;
+  background: #f4f6f9;
+  min-height: 100vh;
+}
+
+/* ✅ GRID LAYOUT */
+.loan-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+
+  /* ✅ FIX ALIGNMENT */
+  align-items: start;
+}
+
+/* ✅ LEFT CARD */
+.loan-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.loan-card h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+/* ✅ LABELS */
+.loan-card label {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* ✅ INPUTS */
+.loan-card input,
+.loan-card select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+/* ✅ INPUT FOCUS */
+.loan-card input:focus,
+.loan-card select:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+
+/* ✅ APPLY BUTTON */
+.apply-btn {
+  margin-top: 16px;
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  opacity: 0.9;
+}
+
+/* ✅ RIGHT SUMMARY CARD (FIXED ✅) */
+.summary-card {
+  background: rgb(134, 157, 223);
+  padding: 20px;
+  border-radius: 14px;
+
+  /* ✅ CRITICAL FIX */
+  height: fit-content;
+  align-self: start;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.summary-card h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+/* ✅ SUMMARY ITEMS */
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* ✅ EMI HIGHLIGHT */
+.highlight {
+  background: #eef2ff;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ✅ INFO BOX */
+.info-box {
+  margin-top: 15px;
+  background: #fef3c7;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #92400e;
+}
+
+/* ✅ PRODUCT TABLE CARD */
+.products-table-card {
+  margin-top: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+/* ✅ TABLE */
+.loan-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+/* ✅ TABLE HEADER */
+.loan-table th {
+  background: #2f4c8f;
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* ✅ TABLE BODY */
+.loan-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* ✅ HOVER EFFECT */
+.loan-table tr:hover {
+  background: #f5f7fb;
+  cursor: pointer;
+}
+
+/* ✅ SELECTED ROW */
+.selected-row {
+  background: #dbeafe !important;
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 768px) {
+  .loan-grid {
+    grid-template-columns: 1fr;
+  }
+}

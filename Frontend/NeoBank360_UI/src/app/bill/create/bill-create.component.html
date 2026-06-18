@@ -1,0 +1,145 @@
+ 
+<section class="bill-page">
+  <div class="bill-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Bills</p>
+        <h1>Create Bill</h1>
+      </div>
+ 
+ 
+      <!-- ✅ FIXED BUTTON -->
+      <button type="button" class="link-button" (click)="goToBills()">
+        ← View Bills
+      </button>
+ 
+    </header>
+ 
+    <form
+      class="bill-form"
+      [formGroup]="form"
+      (ngSubmit)="createBill()"
+    >
+ 
+    <div class="field account-summary" *ngIf="accounts.length > 0">
+      <label>Paying from</label>
+      <p class="account-selected">
+        {{ getSelectedAccountLabel() }}
+      </p>
+    </div>
+ 
+    <!-- ✅ ACCOUNT SELECT (NEW) -->
+<select formControlName="accountId" class="account-select">
+ 
+  <option [ngValue]="null" disabled>Select account</option>
+ 
+  <option
+    *ngFor="let acc of accounts"
+    [ngValue]="acc.id"
+    [ngClass]="{'selected-option': isSelectedAccount(acc.id)}"
+  >
+ 
+    {{ acc.accountType === 'CURRENT' ? 'Current Account' : 'Savings Account' }}
+    -
+    {{ maskAccountNumber(acc.accountNumber) }}
+ 
+    - {{ acc.balance | currency:'INR':'symbol':'1.2-2' }}
+ 
+  </option>
+ 
+</select>
+ 
+      <div class="field">
+        <label for="billerName">Biller Name</label>
+        <input
+          id="billerName"
+          type="text"
+          formControlName="billerName"
+        />
+ 
+        <p
+          class="field-error"
+          *ngIf="hasError('billerName', 'required')"
+        >
+          Biller name is required.
+        </p>
+ 
+        <p
+          class="field-error"
+          *ngIf="hasError('billerName', 'maxlength')"
+        >
+          Biller name is too long.
+        </p>
+      </div>
+ 
+            <!-- CATEGORY -->
+      <div class="field">
+  <label>Category</label>
+ 
+  <select formControlName="category">
+    <option *ngFor="let c of categories" [value]="c">
+      {{ c }}
+    </option>
+  </select>
+</div>
+ 
+      <div class="field">
+        <label for="amount">Amount</label>
+        <input
+          id="amount"
+          type="number"
+          min="0.01"
+          step="0.01"
+          formControlName="amount"
+        />
+ 
+        <p
+          class="field-error"
+          *ngIf="hasError('amount', 'required')"
+        >
+          Amount is required.
+        </p>
+ 
+        <p
+          class="field-error"
+          *ngIf="hasError('amount', 'min')"
+        >
+          Amount must be greater than zero.
+        </p>
+      </div>
+ 
+      <div class="field">
+        <label for="dueDate">Due Date</label>
+        <input
+          id="dueDate"
+          type="date"
+          [min]="minDueDate"
+          formControlName="dueDate"
+        />
+ 
+        <p
+          class="field-error"
+          *ngIf="hasError('dueDate', 'required')"
+        >
+          Due date is required.
+        </p>
+      </div>
+ 
+      <button
+        type="submit"
+        [disabled]="creating || form.invalid"
+      >
+        {{ creating ? 'Creating...' : 'Create Bill' }}
+      </button>
+    </form>
+ 
+    <p class="ok" *ngIf="success">
+      {{ success }}
+    </p>
+ 
+    <p class="err" *ngIf="error">
+      {{ error }}
+    </p>
+  </div>
+</section>
+ 

@@ -1,0 +1,16 @@
+# Eclipse
+.metadata/
+
+# Java
+*.class
+target/
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

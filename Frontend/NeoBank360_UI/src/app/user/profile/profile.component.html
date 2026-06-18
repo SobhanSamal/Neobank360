@@ -1,0 +1,249 @@
+
+
+ 
+
+<section class="profile-wrap">
+
+  <div class="profile-card">
+
+    <div class="header">
+
+      <div>
+
+        <h2>My Profile</h2>
+
+        <p class="sub">View and update your personal details.</p>
+
+      </div>
+
+
+ 
+
+      <span class="role-badge customer" [class.admin]="form.controls.role.value === 'ADMIN'">
+
+        {{ form.controls.role.value || 'USER' }}
+
+      </span>
+
+    </div>
+
+
+ 
+
+    <p class="status loading" *ngIf="loading">Loading profile...</p>
+
+    <p class="status success" *ngIf="success">{{ success }}</p>
+
+    <p class="status error" *ngIf="error">{{ error }}</p>
+
+
+ 
+
+    <form class="form grid-2" [formGroup]="form" (ngSubmit)="save()">
+
+      <div class="form-group">
+
+        <label for="fullName">Full Name</label>
+
+        <input id="fullName" type="text" formControlName="fullName" />
+
+        <small class="field-error" *ngIf="hasError('fullName')">
+
+          Full name must be between 2 and 100 characters.
+
+        </small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="gender">Gender</label>
+
+        <select id="gender" formControlName="gender">
+
+          <option value="">Select gender</option>
+
+          <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
+
+        </select>
+
+        <small class="field-error" *ngIf="hasError('gender')">Gender is required.</small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="email">Email</label>
+
+        <input id="email" type="email" formControlName="email" readonly />
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="mobile">Mobile</label>
+
+        <input id="mobile" type="text" formControlName="mobile" maxlength="10" (input)="onMobileInput($event)" />
+
+        <small class="field-error" *ngIf="hasError('mobile')">
+
+          Enter a valid 10-digit mobile number.
+
+        </small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="dob">Date of Birth</label>
+
+        <input id="dob" type="date" formControlName="dob" />
+
+        <small class="field-error" *ngIf="hasError('dob')">Date of birth is required.</small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="alternateMobile">Alternate Mobile</label>
+
+        <input
+
+          id="alternateMobile"
+
+          type="text"
+
+          formControlName="alternateMobile"
+
+          maxlength="10"
+
+          (input)="onAlternateMobileInput($event)"
+
+        />
+
+        <small class="field-error" *ngIf="hasError('alternateMobile')">
+
+          Enter a valid 10-digit alternate mobile number.
+
+        </small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="state">State</label>
+
+        <select id="state" formControlName="state">
+
+          <option value="">Select state</option>
+
+          <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+
+        </select>
+
+        <small class="field-error" *ngIf="hasError('state')">State is required.</small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="district">District</label>
+
+        <select id="district" formControlName="district">
+
+          <option value="">Select district</option>
+
+          <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+
+        </select>
+
+        <small class="field-error" *ngIf="hasError('district')">District is required.</small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="pincode">Pincode</label>
+
+        <input id="pincode" type="text" formControlName="pincode" maxlength="6" (input)="onPincodeInput($event)" />
+
+        <small class="field-error" *ngIf="hasError('pincode')">Enter a valid 6-digit pincode.</small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group">
+
+        <label for="role">Role</label>
+
+        <input id="role" type="text" formControlName="role" readonly />
+
+      </div>
+
+
+ 
+
+
+ 
+
+      <div class="form-group full">
+
+        <label for="addressLine1">Address</label>
+
+        <textarea id="addressLine1" formControlName="addressLine1"></textarea>
+
+        <small class="field-error" *ngIf="hasError('addressLine1')">
+
+          Address must be at least 5 characters.
+
+        </small>
+
+      </div>
+
+
+ 
+
+      <div class="form-group full">
+
+        <button type="submit" [disabled]="form.invalid || loading || saving">
+
+          {{ saving ? 'Saving...' : 'Update Profile' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</section>
+
+
+ 

@@ -1,0 +1,118 @@
+﻿
+
+<section class="txn-wrap">
+  <div class="txn-grid">
+    <div class="card">
+      <h2>Make Transaction</h2>
+
+      <p *ngIf="loadingAccounts">Loading accounts...</p>
+      <p class="hint" *ngIf="!loadingAccounts && accounts.length === 0">No accounts found. Create an account first.</p>
+
+      <form [formGroup]="form" *ngIf="accounts.length > 0">
+        <label>Select Account</label>
+        <select formControlName="accountId" (change)="onAccountChange()">
+          <option *ngFor="let account of accounts" [value]="account.id">
+            {{ account.accountNumber }} ({{ account.accountType }}) - INR {{ account.balance | number:'1.2-2' }}
+          </option>
+        </select>
+
+        <label>Amount</label>
+        <input type="number" formControlName="amount" min="0.01" step="0.01" placeholder="Enter amount" />
+        <p class="field-error" *ngIf="hasError('amount', 'required')">Amount is required.</p>
+        <p class="field-error" *ngIf="hasError('amount', 'min')">Amount must be greater than 0.</p>
+
+        <label>Description</label>
+        <input type="text" formControlName="description" maxlength="500" placeholder="e.g. Salary credit, ATM withdrawal" />
+        <p class="field-error" *ngIf="hasError('description', 'required')">Description is required.</p>
+        <p class="field-error" *ngIf="hasError('description', 'minlength')">Description must be at least 3 characters.</p>
+
+        <div class="btn-row">
+          <button type="button" class="btn-deposit" [disabled]="processing || form.invalid" (click)="deposit()">
+            {{ processing ? 'Processing...' : 'Deposit' }}
+          </button>
+          <button type="button" class="btn-withdraw" [disabled]="processing || form.invalid" (click)="withdraw()">
+            {{ processing ? 'Processing...' : 'Withdraw' }}
+          </button>
+        </div>
+      </form>
+
+      <p class="ok" *ngIf="success">{{ success }}</p>
+      <p class="err" *ngIf="error">{{ error }}</p>
+    </div>
+
+    <div class="card">
+      <h2>Transaction History</h2>
+      <p class="sub">Account: <strong>{{ selectedAccountNumber() }}</strong></p>
+
+      <!-- Filter & Sort controls -->
+      <div class="controls" *ngIf="history.length > 0">
+        <div class="filter-btns">
+          <button [class.active]="activeFilter === 'ALL'"    (click)="setFilter('ALL')">All</button>
+          <button [class.active]="activeFilter === 'CREDIT'" (click)="setFilter('CREDIT')">Credit</button>
+          <button [class.active]="activeFilter === 'DEBIT'"  (click)="setFilter('DEBIT')">Debit</button>
+        </div>
+        <button class="sort-btn" (click)="toggleSort()">
+          Date {{ sortAsc ? 'Asc' : 'Desc' }}
+        </button>
+      </div>
+
+      <!-- Pagination Info -->
+      <div class="pagination-info" *ngIf="history.length > 0">
+        <span>Transactions {{ getDisplayRange() }} of page {{ currentPage + 1 }}</span>
+      </div>
+
+      <p *ngIf="loadingHistory">Loading transaction history...</p>
+      <p *ngIf="!loadingHistory && history.length === 0" class="hint">No transactions for this account yet.</p>
+      <p *ngIf="!loadingHistory && history.length > 0 && filteredHistory.length === 0" class="hint">No {{ activeFilter | lowercase }} transactions found.</p>
+
+      <!-- Transaction Grid -->
+      <div class="txn-table-wrap" *ngIf="!loadingHistory && filteredHistory.length > 0">
+        <table class="txn-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Balance After</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tx of filteredHistory"
+                [class.row-credit]="tx.type === 'CREDIT'"
+                [class.row-debit]="tx.type === 'DEBIT'">
+              <td>{{ tx.transactionDate | date:'dd MMM yyyy, HH:mm' }}</td>
+              <td>
+                <span class="type-badge"
+                      [class.credit]="tx.type === 'CREDIT'"
+                      [class.debit]="tx.type === 'DEBIT'">
+                  {{ tx.type === 'CREDIT' ? 'Credit' : 'Debit' }}
+                </span>
+              </td>
+              <td>
+                <span [class.credit]="tx.type === 'CREDIT'"
+                      [class.debit]="tx.type === 'DEBIT'">
+                  {{ tx.type === 'CREDIT' ? '+' : '-' }} INR {{ tx.amount | number:'1.2-2' }}
+                </span>
+              </td>
+              <td>{{ tx.description }}</td>
+              <td>INR {{ tx.balanceAfter | number:'1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-controls">
+          <button class="btn-pagination" [disabled]="currentPage === 0" (click)="goToPreviousPage()">
+            Previous
+          </button>
+          <span class="page-indicator">Page {{ currentPage + 1 }}</span>
+          <button class="btn-pagination" [disabled]="!hasNextPage" (click)="goToNextPage()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,72 @@
+ 
+<section class="budget-page">
+  <div class="budget-shell">
+ 
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="heading-block">
+        <p class="eyebrow">BUDGETING</p>
+        <h1>Create Monthly Budget</h1>
+        <p class="subtitle">Plan your spending category‑wise</p>
+      </div>
+ 
+      <!-- Dashboard Button -->
+      <button
+        class="dashboard-btn"
+        (click)="goToDashboard()"
+      >
+        Go to Dashboard
+      </button>
+    </header>
+ 
+    <!-- BUDGET FORM -->
+    <form
+      class="budget-form"
+      [formGroup]="form"
+      (ngSubmit)="createBudget()"
+    >
+ 
+      <label for="category">Category</label>
+      <select id="category" formControlName="category">
+        <option *ngFor="let c of categories" [value]="c">
+          {{ c }}
+        </option>
+      </select>
+ 
+      <label for="budgetMonth">Month</label>
+      <input
+        id="budgetMonth"
+        type="month"
+        formControlName="budgetMonth"
+      />
+ 
+      <label for="limitAmount">Limit Amount</label>
+      <input
+        id="limitAmount"
+        type="number"
+        min="0.01"
+        step="0.01"
+        formControlName="limitAmount"
+      />
+ 
+      <button
+        type="submit"
+        [disabled]="creating || form.invalid"
+      >
+        {{ creating ? 'Creating...' : 'Create Budget' }}
+      </button>
+ 
+    </form>
+ 
+    <!-- STATUS MESSAGES -->
+    <p class="success" *ngIf="successMessage">
+      {{ successMessage }}
+    </p>
+ 
+    <p class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+ 
+  </div>
+</section>
+ 

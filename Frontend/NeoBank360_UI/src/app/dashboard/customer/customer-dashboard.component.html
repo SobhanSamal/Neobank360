@@ -1,0 +1,92 @@
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <section class="header-section">
+    <div class="header-content">
+      <h1>Welcome, {{ profileName || 'Customer' }}</h1>
+      <p class="subtitle">Manage your accounts and transactions</p>
+    </div>
+  </section>
+ 
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Left Column: Accounts List -->
+    <section class="accounts-section">
+      <div class="section-header">
+        <h2>Your Accounts</h2>
+        <p class="section-subtitle" *ngIf="!loading && accounts.length > 0">{{ accounts.length }} account(s)</p>
+      </div>
+ 
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-state">
+        <p>Loading your accounts...</p>
+      </div>
+ 
+      <!-- Empty State -->
+      <div *ngIf="!loading && accounts.length === 0" class="empty-state">
+        <p>No accounts yet. Create one to get started!</p>
+      </div>
+ 
+      <!-- Accounts Grid -->
+      <div *ngIf="!loading && accounts.length > 0" class="accounts-grid">
+        <div *ngFor="let account of accounts" class="account-card">
+          <div class="card-header">
+            <h3>{{ getAccountTypeLabel(account.accountType) }}</h3>
+            <div class="badge-row">
+              <span
+                *ngIf="isDefaultAccount(account.id)"
+                class="account-badge badge-default">
+                Default
+              </span>
+              <span class="account-badge" [ngClass]="'badge-' + account.accountType.toLowerCase()">
+                {{ account.accountType }}
+              </span>
+            </div>
+          </div>
+ 
+          <div class="card-body">
+            <div class="account-detail">
+              <label>Account Number</label>
+              <p class="account-number">{{ account.accountNumber }}</p>
+            </div>
+ 
+            <div class="account-detail">
+              <label>Balance</label>
+              <p class="balance">{{ formatCurrency(account.balance) }}</p>
+            </div>
+          </div>
+ 
+          <div class="card-footer">
+            <button class="btn btn-secondary" routerLink="/transactions">Transactions</button>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- Right Column: Create Account Form -->
+    <section class="create-account-section">
+      <div class="section-header">
+        <h2>Create New Account</h2>
+        <p class="section-subtitle">Go to the account page to open a new bank account</p>
+      </div>
+ 
+      <!-- Error Message -->
+      <div *ngIf="error" class="alert alert-error">
+        <span>{{ error }}</span>
+      </div>
+ 
+      <button class="btn btn-primary" routerLink="/accounts">Create Account</button>
+ 
+      <!-- Account Benefits -->
+      <div class="benefits-section">
+        <h3>Why open an account?</h3>
+        <ul class="benefits-list">
+          <li>✓ Secure digital banking</li>
+          <li>✓ Easy money transfers</li>
+          <li>✓ Track all transactions</li>
+          <li>✓ Real-time balance updates</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>
+ 

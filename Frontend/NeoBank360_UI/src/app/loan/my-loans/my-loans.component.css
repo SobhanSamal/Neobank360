@@ -1,0 +1,108 @@
+.page {
+  padding: 24px;
+  background: #f4f6f9;
+  min-height: 100vh;
+}
+
+/* ✅ Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+/* ✅ Subtitle */
+.sub-title {
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+/* ✅ Apply button */
+.apply-btn {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ✅ Summary cards */
+.summary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  margin-top: 6px;
+  color: #1e3a8a;
+}
+
+/* ✅ Table */
+.table-card {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #1e3a8a;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background: #f9fafb;
+}
+
+/* ✅ Highlights */
+.product {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.emi {
+  color: #047857;
+  font-weight: 600;
+}
+
+/* ✅ Button */
+.view-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* ✅ Empty */
+.empty {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 20px;
+}

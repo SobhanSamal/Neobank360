@@ -1,0 +1,126 @@
+<div class="page-container">
+
+  <!-- ✅ HEADER -->
+  <div class="header">
+    <h2>💰 Loan Product Management</h2>
+
+    <button class="primary-btn" (click)="toggleForm()">
+      {{ showForm ? 'Close' : '+ New Product' }}
+    </button>
+  </div>
+
+  <!-- ✅ SUMMARY CARDS -->
+  <div class="summary">
+
+    <div class="card-sm">
+      <p>Total Products</p>
+      <h3>{{ totalProducts }}</h3>
+    </div>
+
+    <div class="card-sm">
+      <p>Min Loan</p>
+      <h3>₹ {{ minProductAmount }}</h3>
+    </div>
+
+    <div class="card-sm">
+      <p>Max Loan</p>
+      <h3>₹ {{ maxProductAmount }}</h3>
+    </div>
+
+  </div>
+
+  <!-- ✅ FORM (TOGGLE) -->
+  <div class="card form-card" *ngIf="showForm">
+
+    <div class="form-header">
+      <h3>Create Loan Product</h3>
+      <button type="button" class="close-btn" (click)="toggleForm()">✖</button>
+    </div>
+
+    <form #loanForm="ngForm" (ngSubmit)="createProduct()">
+
+      <div class="grid">
+
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" name="productName"
+            [(ngModel)]="newProduct.productName" required>
+        </div>
+
+        <div class="form-group">
+          <label>Minimum Amount</label>
+          <input type="number" name="minAmount"
+            [(ngModel)]="newProduct.minAmount" required>
+        </div>
+
+        <div class="form-group">
+          <label>Maximum Amount</label>
+          <input type="number" name="maxAmount"
+            [(ngModel)]="newProduct.maxAmount" required>
+        </div>
+
+        <div class="form-group">
+          <label>Interest Rate (%)</label>
+          <input type="number" name="annualInterestRate"
+            [(ngModel)]="newProduct.annualInterestRate" required>
+        </div>
+
+        <div class="form-group full">
+          <label>Allowed Tenures</label>
+          <input type="text" name="allowedTenures"
+            [(ngModel)]="newProduct.allowedTenures"
+            placeholder="6,12,24" required>
+        </div>
+
+      </div>
+
+      <button type="submit"
+        class="submit-btn"
+        [disabled]="loanForm.invalid">
+        ✅ Create Product
+      </button>
+
+    </form>
+
+  </div>
+
+  <!-- ✅ SEARCH -->
+  <input
+    class="search"
+    placeholder="Search products..."
+    [(ngModel)]="searchTerm"
+    (input)="filterProducts()"
+  />
+
+  <!-- ✅ TABLE -->
+  <div class="card">
+
+    <h3>Loan Product List</h3>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Rate</th>
+          <th>Tenures</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of filteredProducts">
+          <td class="bold">{{ p.productName }}</td>
+          <td>₹ {{ p.minAmount }}</td>
+          <td>₹ {{ p.maxAmount }}</td>
+          <td>{{ p.annualInterestRate }}%</td>
+          <td>{{ p.allowedTenures }}</td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

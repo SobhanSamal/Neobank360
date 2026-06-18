@@ -1,0 +1,32 @@
+<section class="admin-analytics">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Admin analytics</p>
+      <h1>Transactions, loans, and system health</h1>
+      <p class="lead">Built for Days 42, 43, 46, 48, and 50.</p>
+    </div>
+    <label class="control">
+      <span>Timeframe</span>
+      <select [(ngModel)]="timeframe" (change)="load()">
+        <option value="7d">7 days</option>
+        <option value="30d">30 days</option>
+        <option value="YTD">Year to date</option>
+      </select>
+    </label>
+  </header>
+ 
+  <p class="error" *ngIf="error">{{ error }}</p>
+  <p class="loading" *ngIf="loading">Loading admin analytics...</p>
+ 
+  <div class="grid" *ngIf="!loading">
+    <article class="panel">
+      <h2>Inflow vs outflow velocity</h2>
+      <canvas baseChart [data]="transactionChart" [type]="'line'"></canvas>
+    </article>
+    <article class="panel">
+      <h2>Loan distribution by status and product type</h2>
+      <canvas baseChart [data]="loanChart" [type]="'bar'"></canvas>
+    </article>
+  </div>
+</section>
+ 
